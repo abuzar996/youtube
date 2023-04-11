@@ -1,20 +1,34 @@
 import React, { useEffect, useState ,useCallback} from 'react'
 import './header.styles.css'
-import { YOUTUBE_SEARCH_API } from '../../Constants'
+import { YOUTUBE_SEARCH_API } from '../../Utills/Constants'
+import { useSelector,useDispatch } from 'react-redux'
+import { addData } from '../../Utills/searchSlice'
 const Header = () => {
+  const cachedData=useSelector((state)=>state.search.searchCache);
+  const dispatch=useDispatch();
   const [searchQuery,setSearchQuery]=useState('');
   const [data,setData]=useState([]);
   const [showSearch,setShowSearch] = useState(false);
+  
   const getData=useCallback(()=>{
-
-    fetch(YOUTUBE_SEARCH_API+searchQuery).then(data=>{return data.json()}).then(data=>{setData(data) 
-      console.log(data)});
+    let dataCache=cachedData.filter(data=>data[0]===searchQuery);
+    if (dataCache.length>0)
+    {
+      setData(dataCache[0])
+    }
+    else{
+      fetch(YOUTUBE_SEARCH_API+searchQuery).then(data=>{return data.json()}).then(data=>{
+      setData(data) 
+      dispatch(addData(data))});
+    }
+       // eslint-disable-next-line react-hooks/exhaustive-deps
   },[searchQuery]);
   useEffect(()=>{
     const interval=setTimeout(()=>{
       getData();
     },100);
-    return ()=>{clearTimeout(interval)}
+    return ()=>{
+      clearTimeout(interval)}
   },[getData])
   return (
     
@@ -45,7 +59,7 @@ const Header = () => {
                 </span>
               </li>))}
             </ul>
-        </div>}
+        </div>} 
       </div>
       <div className='user-header'>
         <img alt="user" src={"https://www.vhv.rs/dpng/d/421-4213525_png-file-svg-single-user-icon-png-transparent.png"} className='icon-user'/>

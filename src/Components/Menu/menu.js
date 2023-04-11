@@ -1,9 +1,11 @@
 import React from 'react'
-
-const menu = () => {
+import Comments from '../Comments/comments'
+const Menu = () => {
   return (
-    <div>menu</div>
+    <div
+      className='parent-container'
+    ><Comments name="name" text={"text"}/></div>
   )
 }
 
-export default menu
+export default Menu

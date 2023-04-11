@@ -1,0 +1,30 @@
+.display-icon{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+}
+.container{
+    display:flex;
+    width: 700px;
+    background-color: gray;
+    padding-top: 10px;;
+}
+.font-area{
+    padding-top: 4px;
+    padding-left: 10px;;
+}
+.name{
+    font-weight: bold;
+}
+.text{
+    padding-top: 3px;
+}
+.parent{
+    padding-top: 20px;
+}
+.parent-container{
+    overflow: scroll
+}
+.margin{
+    margin-left: 40px;
+}
